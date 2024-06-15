@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <style>
+      :root {
+        --acolor: black;
+      }
+
+      @supports (color-scheme: dark only) {
+        :root[data-darkmode='f'] {
+          color-scheme: dark only;
+          --acolor: white;
+        }
+      }
+
+      * {
+        touch-action: manipulation;
+      }
+
+      a,
+      a:link,
+      a:visited,
+      a:hover,
+      a:focus,
+      a:active {
+        text-decoration: none;
+        color: var(--acolor);
+      }
+
+      hr {
+        visibility: hidden;
+      }
+
+      #div1 {
+        height: 100vh;
+      }
+
+      @supports (max-width: 100dvw) {
+        #div1 {
+          height: 100dvh;
+        }
+      }
+    </style>
+    <script>
+      if (
+        CSS.supports('color-scheme', 'dark only') &&
+        location.hash !== '#forceDarkMode=0'
+      ) {
+        document.documentElement.dataset.darkmode = 'f'
+      }
+    </script>
+  </head>
+  <body style="padding: 0; margin: 0">
+    <div
+      id="div1"
+      style="
+        display: grid;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        "
+      >
+        <div style="overflow-x: hidden; overflow-y: auto">
+          Load file
+          <br />
+          <input type="file" id="file" autocomplete="off" disabled />
+        </div>
+        <div style="display: grid; place-items: center end">
+          <span>
+            <input
+              type="checkbox"
+              id="forceDarkMode"
+              autocomplete="off"
+              disabled
+            />
+            <label for="forceDarkMode">Force dark mode</label>
+          </span>
+        </div>
+      </div>
+      <hr />
+      <textarea
+        id="text"
+        style="resize: none"
+        autocomplete="off"
+        disabled
+      ></textarea>
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: auto;
+          overflow-y: auto;
+          place-items: center;
+        "
+      >
+        Voice:
+        <select id="voice" autocomplete="off" disabled></select>
+      </div>
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: auto;
+          overflow-y: auto;
+          place-items: center;
+        "
+      >
+        <button id="convert" disabled>Convert</button>
+      </div>
+      <hr />
+    </div>
+    <div
+      id="div2"
+      style="
+        display: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        place-items: start center;
+      "
+    >
+      <hr />
+      <span id="audioSpan"></span>
+      <hr />
+      <span id="saveSpan"></span>
+      <hr />
+      <button id="back">Back</button>
+      <hr />
+    </div>
+    <script>
+      const file = document.querySelector('#file')
+      const text = document.querySelector('#text')
+      const voice = document.querySelector('#voice')
+      const convert = document.querySelector('#convert')
+      const div1 = document.querySelector('#div1')
+      const div2 = document.querySelector('#div2')
+      const audioSpan = document.querySelector('#audioSpan')
+      const saveSpan = document.querySelector('#saveSpan')
+      let blobUrl = null
+
+      file.onchange = evt => {
+        if (evt.target.files.length > 0) {
+          const reader = new FileReader()
+
+          reader.onload = readerEvent => {
+            text.value = readerEvent.target.result
+            file.value = ''
+          }
+
+          reader.readAsText(evt.target.files[0])
+        }
+      }
+
+      convert.onclick = () => {
+        if (voice.selectedIndex < 0) {
+          return
+        }
+
+        if (text.value.length === 0) {
+          return
+        }
+
+        div1.style.setProperty('display', 'none')
+
+        fetch('/', {
+          method: 'POST',
+          body: text.value,
+          headers: { Voice: voice.value }
+        })
+          .then(r => {
+            if (r.ok) {
+              r.blob()
+                .then(blob => {
+                  blobUrl = URL.createObjectURL(blob)
+
+                  const a = document.createElement('a')
+                  a.innerText = 'Save'
+                  a.href = blobUrl
+                  switch (r.headers.get('Content-Type')) {
+                    case 'audio/wav':
+                      a.download = 'file.wav'
+                      break
+                    case 'audio/flac':
+                      a.download = 'file.flac'
+                      break
+                    default:
+                      a.download = 'file'
+                  }
+
+                  const audio = document.createElement('audio')
+                  audio.src = blobUrl
+                  audio.controls = 'controls'
+
+                  saveSpan.appendChild(a)
+                  audioSpan.appendChild(audio)
+                  div2.style.setProperty('display', 'grid')
+                })
+                .catch(() => {
+                  div1.style.setProperty('display', 'grid')
+                })
+            } else {
+              div1.style.setProperty('display', 'grid')
+            }
+          })
+          .catch(() => {
+            div1.style.setProperty('display', 'grid')
+          })
+      }
+
+      document.querySelector('#back').onclick = () => {
+        div2.style.setProperty('display', 'none')
+        saveSpan.removeChild(document.querySelector('#saveSpan a'))
+        audioSpan.removeChild(document.querySelector('#audioSpan audio'))
+        URL.revokeObjectURL(blobUrl)
+        blobUrl = null
+        div1.style.setProperty('display', 'grid')
+      }
+
+      if (CSS.supports('color-scheme', 'dark only')) {
+        const forceDarkMode = document.querySelector('#forceDarkMode')
+
+        forceDarkMode.disabled = false
+
+        forceDarkMode.checked =
+          'darkmode' in document.documentElement.dataset &&
+          document.documentElement.dataset.darkmode === 'f'
+
+        forceDarkMode.onclick = () => {
+          if (location.hash === '#forceDarkMode=0') {
+            location.href = location.href.substring(
+              0,
+              location.href.indexOf('#')
+            )
+          } else {
+            location.hash = '#forceDarkMode=0'
+            location.reload()
+          }
+        }
+      }
+
+      fetch('/voices')
+        .then(r => r.json())
+        .then(voices => {
+          if (voices.length === 0) {
+            return
+          }
+
+          file.disabled = false
+          text.disabled = false
+          voice.disabled = false
+          convert.disabled = false
+
+          voices.forEach((v, i) => {
+            voice[i] = new Option(v, v, false, i === 0)
+          })
+        })
+    </script>
+  </body>
+</html>
