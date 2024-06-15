@@ -13,7 +13,7 @@ import (
 	"sync"
 )
 
-type ConfigStruct struct {
+type Config struct {
 	Address            string `json:"address"`
 	EnableTextEndpoint bool   `json:"enableTextEndpoint"`
 	Files              struct {
@@ -27,7 +27,7 @@ type ConfigStruct struct {
 }
 
 var allowedCharacters = map[rune]bool{}
-var config ConfigStruct
+var config Config
 var m sync.Mutex
 
 func HttpHandler(w http.ResponseWriter, req *http.Request) {
