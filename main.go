@@ -26,9 +26,9 @@ type Config struct {
 	TextLengthLimit   int                   `json:"textLengthLimit"`
 }
 
-var allowedCharacters = map[rune]bool{}
 var config Config
 var m sync.Mutex
+var allowedCharacters = map[rune]bool{}
 
 func HttpHandler(w http.ResponseWriter, req *http.Request) {
 	switch req.URL.Path {
