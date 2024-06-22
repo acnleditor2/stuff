@@ -121,6 +121,7 @@ func HttpHandler(w http.ResponseWriter, req *http.Request) {
 				default:
 					w.Header().Set("Content-Type", "application/octet-stream")
 				}
+
 				io.Copy(w, audioFile)
 				audioFile.Close()
 			} else {
@@ -174,18 +175,18 @@ func main() {
 	if len(os.Args) < 2 || os.Args[1] == "-" {
 		configBytes, err = io.ReadAll(os.Stdin)
 	} else if strings.HasPrefix(os.Args[1], "http://") || strings.HasPrefix(os.Args[1], "https://") {
-		r, err := http.Get(os.Args[1])
+		response, err := http.Get(os.Args[1])
 		if err != nil {
 			panic(err)
 		}
 
-		defer r.Body.Close()
-
-		if r.StatusCode != http.StatusOK {
+		if response.StatusCode != http.StatusOK {
+			response.Body.Close()
 			os.Exit(1)
 		}
 
-		configBytes, err = io.ReadAll(r.Body)
+		configBytes, err = io.ReadAll(response.Body)
+		response.Body.Close()
 	} else {
 		configBytes, err = os.ReadFile(os.Args[1])
 	}
