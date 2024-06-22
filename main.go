@@ -152,7 +152,6 @@ func HttpHandler(w http.ResponseWriter, req *http.Request) {
 		textFile.Close()
 	case "/voices":
 		voices := make([]string, len(config.Voices))
-
 		i := 0
 		for k := range config.Voices {
 			voices[i] = k
