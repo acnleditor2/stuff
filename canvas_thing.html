@@ -1,0 +1,3284 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Untitled</title>
+    <style>
+      :root {
+        font-family: sans-serif;
+        --acolor: black;
+      }
+
+      @supports (color-scheme: dark only) {
+        :root[data-darkmode='f'] {
+          color-scheme: dark only;
+          --acolor: white;
+        }
+      }
+
+      :root[data-mjpegwait='1'] {
+        cursor: wait;
+      }
+
+      * {
+        touch-action: manipulation;
+      }
+
+      a,
+      a:link,
+      a:visited,
+      a:hover,
+      a:focus,
+      a:active {
+        text-decoration: none;
+        color: var(--acolor);
+      }
+
+      hr {
+        visibility: hidden;
+      }
+
+      body > div:first-of-type {
+        height: 100vh;
+      }
+
+      #settings {
+        height: 100vh;
+      }
+
+      #exportDiv {
+        height: 100vh;
+      }
+
+      #exportJsonDiv {
+        height: 100vh;
+      }
+
+      #exportJsDiv {
+        height: 100vh;
+      }
+
+      #exportLinkDiv {
+        height: 100vh;
+      }
+
+      #export9Div {
+        height: 100vh;
+      }
+
+      canvas,
+      img {
+        max-width: 100vw;
+        max-height: 100vh;
+      }
+
+      @supports (max-width: 100dvw) {
+        body > div:first-of-type {
+          height: 100dvh;
+        }
+
+        #settings {
+          height: 100dvh;
+        }
+
+        #exportDiv {
+          height: 100dvh;
+        }
+
+        #exportJsonDiv {
+          height: 100dvh;
+        }
+
+        #exportJsDiv {
+          height: 100dvh;
+        }
+
+        #exportLinkDiv {
+          height: 100dvh;
+        }
+
+        #export9Div {
+          height: 100dvh;
+        }
+
+        canvas,
+        img {
+          max-width: 100dvw;
+          max-height: 100dvh;
+        }
+      }
+    </style>
+    <script>
+      if (
+        CSS.supports('color-scheme', 'dark only') &&
+        !(
+          location.hash.length > 0 &&
+          location.hash.substring(1).split(',').includes('forceDarkMode=0')
+        )
+      ) {
+        document.documentElement.dataset.darkmode = 'f'
+      }
+    </script>
+  </head>
+  <body style="padding: 0; margin: 0">
+    <div
+      style="
+        display: grid;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        "
+      >
+        <div style="overflow-x: hidden; overflow-y: auto">
+          Load file
+          <br />
+          <input type="file" id="file" autocomplete="off" />
+        </div>
+        <div style="display: grid; place-items: center end">
+          <span>
+            <button id="jsonJs">JSON/JS</button>
+            <button id="next">Next</button>
+          </span>
+        </div>
+      </div>
+      <hr />
+      <span>
+        Line groups:
+        <input type="checkbox" id="group1Checkbox" autocomplete="off" checked />
+        <label for="group1Checkbox">1</label>
+        <input type="checkbox" id="group2Checkbox" autocomplete="off" />
+        <label for="group2Checkbox">2</label>
+        <input type="checkbox" id="group3Checkbox" autocomplete="off" />
+        <label for="group3Checkbox">3</label>
+        <input type="checkbox" id="group4Checkbox" autocomplete="off" />
+        <label for="group4Checkbox">4</label>
+        <input type="checkbox" id="group5Checkbox" autocomplete="off" />
+        <label for="group5Checkbox">5</label>
+      </span>
+      <div style="display: grid; overflow-x: auto; overflow-y: auto">
+        <textarea
+          id="group1"
+          style="resize: none"
+          autocomplete="off"
+          placeholder="Line group 1"
+        ></textarea>
+        <textarea
+          id="group2"
+          style="display: none; resize: none"
+          autocomplete="off"
+          placeholder="Line group 2"
+        ></textarea>
+        <textarea
+          id="group3"
+          style="display: none; resize: none"
+          autocomplete="off"
+          placeholder="Line group 3"
+        ></textarea>
+        <textarea
+          id="group4"
+          style="display: none; resize: none"
+          autocomplete="off"
+          placeholder="Line group 4"
+        ></textarea>
+        <textarea
+          id="group5"
+          style="display: none; resize: none"
+          autocomplete="off"
+          placeholder="Line group 5"
+        ></textarea>
+      </div>
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: auto;
+          overflow-y: auto;
+          place-items: center;
+        "
+      >
+        <span>
+          <input
+            type="checkbox"
+            id="forceDarkMode"
+            autocomplete="off"
+            disabled
+          />
+          <label for="forceDarkMode">Force dark mode</label>
+        </span>
+      </div>
+      <hr />
+    </div>
+    <div
+      id="settings"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        "
+      >
+        <div style="display: grid; place-items: center start">
+          <button id="settingsBack">Back</button>
+        </div>
+        <div
+          style="
+            display: grid;
+            overflow-x: hidden;
+            overflow-y: auto;
+            place-items: center;
+          "
+        >
+          Settings
+        </div>
+        <div style="display: grid; place-items: center end">
+          <button id="settingsStartPreview">Start</button>
+          <button id="settingsExport">Export</button>
+        </div>
+      </div>
+      <div
+        style="
+          display: grid;
+          overflow-x: auto;
+          overflow-y: auto;
+          place-items: start center;
+        "
+      >
+        <div>
+          <br />
+          Name:
+          <input type="text" id="name" size="10" autocomplete="off" />
+          <br />
+          Width:
+          <input
+            type="text"
+            id="width"
+            size="10"
+            value="350"
+            autocomplete="off"
+          />
+          <br />
+          Height:
+          <input
+            type="text"
+            id="height"
+            size="10"
+            value="200"
+            autocomplete="off"
+          />
+          <br />
+          Text color:
+          <input
+            type="text"
+            id="textColor"
+            size="10"
+            value="#ffffff"
+            autocomplete="off"
+          />
+          <br />
+          Outline color:
+          <input
+            type="text"
+            id="outlineColor"
+            size="10"
+            value="#ffffff"
+            autocomplete="off"
+          />
+          <br />
+          Font size:
+          <input
+            type="text"
+            id="fontSize"
+            size="10"
+            value="32"
+            autocomplete="off"
+          />
+          <br />
+          Padding:
+          <input
+            type="text"
+            id="padding"
+            size="10"
+            value="0"
+            autocomplete="off"
+            disabled
+          />
+          <br />
+          Spacing:
+          <input
+            type="text"
+            id="spacing"
+            size="10"
+            value="1"
+            autocomplete="off"
+            disabled
+          />
+          <hr />
+          Background:
+          <br />
+          <input
+            type="radio"
+            id="backgroundRadio1"
+            name="background"
+            autocomplete="off"
+            checked
+          />
+          <input
+            type="text"
+            id="backgroundColor"
+            size="10"
+            value="#242424"
+            autocomplete="off"
+          />
+          <br />
+          <input
+            type="radio"
+            id="backgroundRadio2"
+            name="background"
+            autocomplete="off"
+            disabled
+          />
+          <input type="file" id="backgroundImageFile" autocomplete="off" />
+          <hr />
+          Font:
+          <br />
+          <input
+            type="radio"
+            id="fontRadio1"
+            name="fontRadio"
+            autocomplete="off"
+            checked
+          />
+          <input
+            type="text"
+            id="font"
+            size="10"
+            value="monospace"
+            autocomplete="off"
+          />
+          <br />
+          <input
+            type="radio"
+            id="fontRadio2"
+            name="fontRadio"
+            autocomplete="off"
+            disabled
+          />
+          <input type="file" id="fontFile" autocomplete="off" />
+          <hr />
+          Outlines:
+          <br />
+          <input
+            type="radio"
+            id="outlinesRadio1"
+            name="outlines"
+            autocomplete="off"
+            checked
+          />
+          <label for="outlinesRadio1">Text only</label>
+          <br />
+          <input
+            type="radio"
+            id="outlinesRadio2"
+            name="outlines"
+            autocomplete="off"
+          />
+          <label for="outlinesRadio2">Outlines only</label>
+          <br />
+          <input
+            type="radio"
+            id="outlinesRadio3"
+            name="outlines"
+            autocomplete="off"
+          />
+          <label for="outlinesRadio3">Text and outlines</label>
+          <hr />
+          Speed:
+          <br />
+          <input
+            type="radio"
+            id="speedRadio1"
+            name="speed"
+            autocomplete="off"
+          />
+          <label for="speedRadio1">25%</label>
+          <br />
+          <input
+            type="radio"
+            id="speedRadio2"
+            name="speed"
+            autocomplete="off"
+          />
+          <label for="speedRadio2">50%</label>
+          <br />
+          <input
+            type="radio"
+            id="speedRadio3"
+            name="speed"
+            autocomplete="off"
+            checked
+          />
+          <label for="speedRadio3">100%</label>
+          <hr />
+          Y:
+          <br />
+          <input
+            type="radio"
+            id="yRadio1"
+            name="y"
+            autocomplete="off"
+            checked
+          />
+          <label for="yRadio1">Random</label>
+          <br />
+          <input type="radio" id="yRadio2" name="y" autocomplete="off" />
+          <label for="yRadio2">Center</label>
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div
+      id="canvasDiv"
+      style="
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <canvas width="1" height="1"></canvas>
+    </div>
+    <div
+      id="exportDiv"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        "
+      >
+        <div style="display: grid; place-items: center start">
+          <button id="exportBack">Back</button>
+        </div>
+        <div
+          style="
+            display: grid;
+            overflow-x: hidden;
+            overflow-y: auto;
+            place-items: center;
+          "
+        >
+          Export
+        </div>
+        <div style="display: grid; place-items: center end">
+          <button id="export">Export</button>
+        </div>
+      </div>
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: auto;
+          overflow-y: auto;
+          place-items: start center;
+        "
+      >
+        <div>
+          Export as:
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio1"
+            name="exportAsRadio"
+            autocomplete="off"
+            checked
+          />
+          <label for="exportAsRadio1">JSON</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio2"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio2">JS</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio3"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio3">Link</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio4"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio4">PNG</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio5"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio5">WebP</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio6"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio6">JPEG</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio7"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio7">MJPEG</label>
+          <br />
+          <input
+            type="radio"
+            id="exportAsRadio8"
+            name="exportAsRadio"
+            autocomplete="off"
+          />
+          <label for="exportAsRadio8">RGBA video</label>
+          <br />
+          <span id="export9Span">
+            <input
+              type="radio"
+              id="exportAsRadio9"
+              name="exportAsRadio"
+              autocomplete="off"
+            />
+            <button id="export9Button">&hellip;</button>
+          </span>
+          <hr />
+          Encryption algorithm:
+          <br />
+          <input
+            type="radio"
+            id="encryptionAlgorithmRadio1"
+            name="encryptionAlgorithmRadio"
+            autocomplete="off"
+            checked
+          />
+          <label for="encryptionAlgorithmRadio1">None</label>
+          <br />
+          <input
+            type="radio"
+            id="encryptionAlgorithmRadio2"
+            name="encryptionAlgorithmRadio"
+            autocomplete="off"
+          />
+          <label for="encryptionAlgorithmRadio2">AES-GCM</label>
+          <hr />
+          Quality:
+          <input
+            type="range"
+            id="quality"
+            value="1"
+            min="0"
+            max="1"
+            step="0.1"
+            autocomplete="off"
+            disabled
+          />
+          <br />
+          Show image:
+          <input type="checkbox" id="showImage" autocomplete="off" disabled />
+        </div>
+      </div>
+      <hr />
+    </div>
+    <div
+      id="export9ButtonDiv"
+      style="
+        display: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        place-items: start center;
+      "
+    >
+      <hr />
+      <div>
+        <input
+          type="checkbox"
+          id="export9LinesSettings"
+          autocomplete="off"
+          checked
+        />
+        <label for="export9LinesSettings">Lines &amp; settings</label>
+        <br />
+        <input
+          type="checkbox"
+          id="export9BackgroundImage"
+          autocomplete="off"
+          checked
+        />
+        <label for="export9BackgroundImage">Background image</label>
+        <br />
+        <input type="checkbox" id="export9Font" autocomplete="off" checked />
+        <label for="export9Font">Font</label>
+      </div>
+      <hr />
+      <button id="export9ButtonDivBack">Back</button>
+      <hr />
+    </div>
+    <div
+      id="exportJsonDiv"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto auto 1fr auto auto 1fr auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        "
+      >
+        <div style="display: grid; place-items: center start">
+          <button id="exportJsonBack">Back</button>
+        </div>
+        <div
+          id="exportJsonSaveDiv"
+          style="display: grid; place-items: center end"
+        ></div>
+      </div>
+      <hr />
+      JSON:
+      <textarea id="json" style="resize: none" readonly></textarea>
+      <hr />
+      JSON link:
+      <textarea id="jsonLink" style="resize: none"></textarea>
+      <hr />
+      # link:
+      <textarea id="jsonHashLink" style="resize: none" readonly></textarea>
+      <hr />
+    </div>
+    <div
+      id="exportJsDiv"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto auto 1fr auto auto 1fr auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        "
+      >
+        <div style="display: grid; place-items: center start">
+          <button id="exportJsBack">Back</button>
+        </div>
+        <div
+          id="exportJsSaveDiv"
+          style="display: grid; place-items: center end"
+        ></div>
+      </div>
+      <hr />
+      JS:
+      <textarea id="js" style="resize: none" readonly></textarea>
+      <hr />
+      JS link:
+      <textarea id="jsLink" style="resize: none"></textarea>
+      <hr />
+      # link:
+      <textarea id="jsHashLink" style="resize: none" readonly></textarea>
+      <hr />
+    </div>
+    <div
+      id="exportLinkDiv"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto 1fr;
+      "
+    >
+      <hr />
+      <div>
+        <button id="exportLinkBack">Back</button>
+        <button id="exportLinkOpenInNewTab">Open in new tab</button>
+      </div>
+      <hr />
+      <textarea id="link" style="resize: none" readonly></textarea>
+      <hr />
+    </div>
+    <div
+      id="exportImageDiv"
+      style="
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <img style="display: block" />
+    </div>
+    <div
+      id="exportFileDiv"
+      style="
+        display: none;
+        overflow-x: hidden;
+        overflow-y: auto;
+        place-items: start center;
+      "
+    >
+      <hr />
+      <span id="exportFileProgress" style="display: none">0%</span>
+      <span id="fileSaveSpan"></span>
+      <hr />
+      <button id="exportFileBack" style="display: none">Back</button>
+      <hr />
+    </div>
+    <div
+      id="export9Div"
+      style="
+        display: none;
+        margin-left: 8px;
+        margin-right: 8px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        grid-template-rows: auto auto auto auto 1fr auto auto 1fr;
+      "
+    >
+      <hr />
+      <div
+        style="
+          display: grid;
+          overflow-x: hidden;
+          overflow-y: auto;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        "
+      >
+        <div style="display: grid; place-items: center start">
+          <button id="export9Back">Back</button>
+        </div>
+        <div
+          id="export9SaveDiv"
+          style="display: grid; place-items: center end"
+        ></div>
+      </div>
+      <hr />
+      File link:
+      <textarea id="export9FileLink" style="resize: none"></textarea>
+      <hr />
+      # link:
+      <textarea id="export9HashLink" style="resize: none" readonly></textarea>
+      <hr />
+    </div>
+    <script>
+      const decoder = new TextDecoder()
+      const encoder = new TextEncoder()
+      const backgroundColor = document.querySelector('#backgroundColor')
+      const textColor = document.querySelector('#textColor')
+      const outlineColor = document.querySelector('#outlineColor')
+      const backgroundRadio2 = document.querySelector('#backgroundRadio2')
+      const outlinesRadio1 = document.querySelector('#outlinesRadio1')
+      const outlinesRadio2 = document.querySelector('#outlinesRadio2')
+      const outlinesRadio3 = document.querySelector('#outlinesRadio3')
+      const yRadio1 = document.querySelector('#yRadio1')
+      const canvas1Context = document.querySelector('canvas').getContext('2d')
+      let canvas2 = null
+      let canvas2Context = null
+      let centerX = 0
+      let centerY = 0
+      let endY = 0
+      let lines = []
+      let lineIndex = 0
+      let lastLine = ''
+      let backgroundImage = null
+      let backgroundImageBuffer = null
+      let backgroundImageUrl = null
+      let fontBuffer = null
+      let fontFileFace = null
+      let singleFrame = false
+      let quality = 0
+      let exportUrls = [null, null]
+      let videoFrames = []
+      let requestId = null
+      let wakeLock = null
+      let keyBase64 = ''
+      let parts = []
+
+      async function loadState(...args) {
+        if (args.length === 1) {
+          if (typeof args[0] === 'string') {
+            if (args[0][0] === '{' || args[0][0] === '[') {
+              await loadState(JSON.parse(args[0]))
+            } else if (args[0][0] === '"') {
+              keyBase64 = JSON.parse(args[0])
+            } else {
+              await loadState(
+                await (
+                  await fetch(
+                    `data:application/json;charset=utf-8;base64,${args[0]}`
+                  )
+                ).json()
+              )
+            }
+          } else if (Array.isArray(args[0])) {
+            if (args[0].length === 1) {
+              if (typeof args[0][0] === 'string') {
+                keyBase64 = args[0][0]
+              } else {
+                await loadState(args[0][0])
+              }
+            } else if (args[0].length === 3) {
+              const keyBuffer = await (
+                await fetch(`data:application/octet-stream;base64,${keyBase64}`)
+              ).arrayBuffer()
+
+              const key = await window.crypto.subtle.importKey(
+                'raw',
+                keyBuffer.byteLength === 33 ? keyBuffer.slice(1) : keyBuffer,
+                {
+                  name: 'AES-GCM'
+                },
+                true,
+                ['encrypt', 'decrypt']
+              )
+
+              keyBase64 = ''
+
+              await loadState(
+                decoder.decode(
+                  await window.crypto.subtle.decrypt(
+                    {
+                      name: 'AES-GCM',
+                      iv: await (
+                        await fetch(
+                          `data:application/octet-stream;base64,${args[0][2]}`
+                        )
+                      ).arrayBuffer()
+                    },
+                    key,
+                    await (
+                      await fetch(
+                        `data:application/octet-stream;base64,${args[0][1]}`
+                      )
+                    ).arrayBuffer()
+                  )
+                )
+              )
+            }
+          } else {
+            if ('buffer' in args[0] || 'parts' in args[0] || 'key' in args[0]) {
+              if ('buffer' in args[0]) {
+                if (args[0].buffer.byteLength === 0) {
+                  return
+                }
+
+                const a = new Uint8Array(args[0].buffer)
+
+                for (const part of parts) {
+                  switch (part.type) {
+                    case 'backgroundImage':
+                      backgroundRadio2.disabled = false
+
+                      document.querySelector('#backgroundImageFile').disabled =
+                        true
+
+                      backgroundImageBuffer = a.slice(
+                        part.start,
+                        part.start + part.size
+                      )
+
+                      if ('type' in part) {
+                        backgroundImageUrl = URL.createObjectURL(
+                          new Blob([backgroundImageBuffer], {
+                            type: part.type
+                          })
+                        )
+                      } else {
+                        backgroundImageUrl = URL.createObjectURL(
+                          new Blob([backgroundImageBuffer])
+                        )
+                      }
+
+                      backgroundImage = new Image()
+                      backgroundImage.src = backgroundImageUrl
+                      backgroundRadio2.checked = true
+
+                      break
+                    case 'font':
+                      fontBuffer = a.slice(part.start, part.start + part.size)
+
+                      const f = new FontFace(
+                        `FontAt${part.start}`,
+                        fontBuffer.slice()
+                      )
+
+                      document.fonts.add(f)
+                      await f.load()
+
+                      document.querySelector('#fontRadio1').checked = true
+
+                      document.querySelector('#font').value =
+                        `FontAt${part.start}`
+
+                      break
+                    case 'json':
+                      await loadState(
+                        JSON.parse(
+                          decoder.decode(
+                            a.slice(part.start, part.start + part.size)
+                          )
+                        )
+                      )
+
+                      break
+                    case 'js':
+                      eval(
+                        decoder.decode(
+                          a.slice(part.start, part.start + part.size)
+                        )
+                      )
+
+                      break
+                    case 'lines':
+                      document.querySelector('#group1Checkbox').checked = true
+                      document.querySelector('#group2Checkbox').checked = false
+                      document.querySelector('#group3Checkbox').checked = false
+                      document.querySelector('#group4Checkbox').checked = false
+                      document.querySelector('#group5Checkbox').checked = false
+
+                      document
+                        .querySelector('#group1')
+                        .style.removeProperty('display')
+
+                      document
+                        .querySelector('#group2')
+                        .style.setProperty('display', 'none')
+
+                      document
+                        .querySelector('#group3')
+                        .style.setProperty('display', 'none')
+
+                      document
+                        .querySelector('#group4')
+                        .style.setProperty('display', 'none')
+
+                      document
+                        .querySelector('#group5')
+                        .style.setProperty('display', 'none')
+
+                      document.querySelector('#group1').value = decoder
+                        .decode(a.slice(part.start, part.start + part.size))
+                        .split('\n')
+                        .map(s => s.trim())
+                        .filter(Boolean)
+                        .join('\n')
+
+                      break
+                  }
+                }
+
+                while (parts.length > 0) {
+                  parts.pop()
+                }
+              }
+
+              if ('parts' in args[0]) {
+                if (args[0].parts.every(part => 'start' in part)) {
+                  for (const part of args[0].parts) {
+                    parts.push({
+                      ...part
+                    })
+                  }
+                } else if (args[0].parts.every(part => !('start' in part))) {
+                  let s = 'start' in args[0] ? args[0].start : 0
+
+                  for (const part of args[0].parts) {
+                    parts.push({
+                      start: s,
+                      ...part
+                    })
+
+                    s += part.size
+                  }
+                }
+              }
+
+              if ('key' in args[0]) {
+                keyBase64 = args[0].key
+              }
+
+              return
+            }
+
+            if ('name' in args[0]) {
+              const trimmedName = args[0].name.trim()
+              document.title = trimmedName
+              document.querySelector('#name').value = trimmedName
+            }
+
+            if ('width' in args[0]) {
+              document.querySelector('#width').value = args[0].width.toString()
+            }
+
+            if ('height' in args[0]) {
+              document.querySelector('#height').value =
+                args[0].height.toString()
+            }
+
+            if ('backgroundColor' in args[0]) {
+              backgroundColor.value = args[0].backgroundColor
+            }
+
+            if ('textColor' in args[0]) {
+              textColor.value = args[0].textColor
+            }
+
+            if ('outlineColor' in args[0]) {
+              outlineColor.value = args[0].outlineColor
+            }
+
+            if ('fontSize' in args[0]) {
+              document.querySelector('#fontSize').value =
+                args[0].fontSize.toString()
+            }
+
+            if ('padding' in args[0]) {
+              document.querySelector('#padding').value =
+                args[0].padding.toString()
+            }
+
+            if ('spacing' in args[0]) {
+              document.querySelector('#spacing').value =
+                args[0].spacing.toString()
+            }
+
+            if ('font' in args[0]) {
+              document.querySelector('#font').value = args[0].font
+            }
+
+            if ('outlines' in args[0]) {
+              if (args[0].outlines === 2) {
+                outlinesRadio2.checked = true
+              } else if (args[0].outlines === 3) {
+                outlinesRadio3.checked = true
+              }
+            }
+
+            if ('speed' in args[0]) {
+              if (args[0].speed === 1) {
+                document.querySelector('#speedRadio1').checked = true
+              } else if (args[0].speed === 2) {
+                document.querySelector('#speedRadio2').checked = true
+              }
+            }
+
+            if ('y' in args[0] && args[0].y === 2) {
+              document.querySelector('#yRadio2').checked = true
+            }
+
+            if ('1Enabled' in args[0] && !args[0]['1Enabled']) {
+              document.querySelector('#group1Checkbox').checked = false
+
+              document
+                .querySelector('#group1')
+                .style.setProperty('display', 'none')
+            } else {
+              document.querySelector('#group1Checkbox').checked = true
+              document.querySelector('#group1').style.removeProperty('display')
+            }
+
+            if ('2Enabled' in args[0] && args[0]['2Enabled']) {
+              document.querySelector('#group2Checkbox').checked = true
+              document.querySelector('#group2').style.removeProperty('display')
+            } else {
+              document.querySelector('#group2Checkbox').checked = false
+
+              document
+                .querySelector('#group2')
+                .style.setProperty('display', 'none')
+            }
+
+            if ('3Enabled' in args[0] && args[0]['3Enabled']) {
+              document.querySelector('#group3Checkbox').checked = true
+              document.querySelector('#group3').style.removeProperty('display')
+            } else {
+              document.querySelector('#group3Checkbox').checked = false
+
+              document
+                .querySelector('#group3')
+                .style.setProperty('display', 'none')
+            }
+
+            if ('4Enabled' in args[0] && args[0]['4Enabled']) {
+              document.querySelector('#group4Checkbox').checked = true
+              document.querySelector('#group4').style.removeProperty('display')
+            } else {
+              document.querySelector('#group4Checkbox').checked = false
+
+              document
+                .querySelector('#group4')
+                .style.setProperty('display', 'none')
+            }
+
+            if ('5Enabled' in args[0] && args[0]['5Enabled']) {
+              document.querySelector('#group5Checkbox').checked = true
+              document.querySelector('#group5').style.removeProperty('display')
+            } else {
+              document.querySelector('#group5Checkbox').checked = false
+
+              document
+                .querySelector('#group5')
+                .style.setProperty('display', 'none')
+            }
+
+            if ('lines' in args[0]) {
+              document.querySelector('#group1').value = args[0].lines.join('\n')
+            } else if ('1' in args[0]) {
+              document.querySelector('#group1').value = args[0]['1'].join('\n')
+            }
+
+            if ('2' in args[0]) {
+              document.querySelector('#group2').value = args[0]['2'].join('\n')
+            }
+
+            if ('3' in args[0]) {
+              document.querySelector('#group3').value = args[0]['3'].join('\n')
+            }
+
+            if ('4' in args[0]) {
+              document.querySelector('#group4').value = args[0]['4'].join('\n')
+            }
+
+            if ('5' in args[0]) {
+              document.querySelector('#group5').value = args[0]['5'].join('\n')
+            }
+          }
+        } else {
+          await loadState(args)
+        }
+      }
+
+      function getJson(options) {
+        const trimmedName = document.querySelector('#name').value.trim()
+        const width = parseInt(document.querySelector('#width').value)
+        const height = parseInt(document.querySelector('#height').value)
+        const fontSize = parseInt(document.querySelector('#fontSize').value)
+        const padding = parseFloat(document.querySelector('#padding').value)
+        const spacing = parseFloat(document.querySelector('#spacing').value)
+        const font = document.querySelector('#font').value.trim()
+
+        return JSON.stringify({
+          name: trimmedName.length === 0 ? undefined : trimmedName,
+          lines: options.lines.length === 0 ? undefined : options.lines,
+          '1Enabled': document.querySelector('#group1Checkbox').checked
+            ? undefined
+            : false,
+          '2Enabled': document.querySelector('#group2Checkbox').checked
+            ? true
+            : undefined,
+          '3Enabled': document.querySelector('#group3Checkbox').checked
+            ? true
+            : undefined,
+          '4Enabled': document.querySelector('#group4Checkbox').checked
+            ? true
+            : undefined,
+          '5Enabled': document.querySelector('#group5Checkbox').checked
+            ? true
+            : undefined,
+          1: options['1'].length === 0 ? undefined : options['1'],
+          2: options['2'].length === 0 ? undefined : options['2'],
+          3: options['3'].length === 0 ? undefined : options['3'],
+          4: options['4'].length === 0 ? undefined : options['4'],
+          5: options['5'].length === 0 ? undefined : options['5'],
+          width: width === 350 ? undefined : width,
+          height: height === 200 ? undefined : height,
+          backgroundColor:
+            options.backgroundColor === '#242424'
+              ? undefined
+              : options.backgroundColor,
+          textColor:
+            options.textColor === '#ffffff' ? undefined : options.textColor,
+          outlineColor:
+            options.outlineColor === '#ffffff'
+              ? undefined
+              : options.outlineColor,
+          fontSize: fontSize === 32 ? undefined : fontSize,
+          padding: padding === 0 ? undefined : padding,
+          spacing: spacing === 1 ? undefined : spacing,
+          font: font === 'monospace' ? undefined : font,
+          outlines: outlinesRadio1.checked
+            ? undefined
+            : outlinesRadio2.checked
+              ? 2
+              : 3,
+          speed: document.querySelector('#speedRadio3').checked
+            ? undefined
+            : document.querySelector('#speedRadio1').checked
+              ? 1
+              : 2,
+          y: yRadio1.checked ? undefined : 2
+        })
+      }
+
+      async function encryptJson(j) {
+        const iv = window.crypto.getRandomValues(new Uint8Array(12))
+
+        const key = await window.crypto.subtle.generateKey(
+          {
+            name: 'AES-GCM',
+            length: 256
+          },
+          true,
+          ['encrypt', 'decrypt']
+        )
+
+        const keyBuffer = await window.crypto.subtle.exportKey('raw', key)
+
+        keyBase64 = await new Promise((resolve, reject) => {
+          const reader = new FileReader()
+
+          reader.onload = evt => {
+            resolve(
+              evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+            )
+          }
+
+          reader.readAsDataURL(
+            new Blob([new Uint8Array(1), keyBuffer], {
+              type: 'application/octet-stream'
+            })
+          )
+        })
+
+        const encryptedJson = await window.crypto.subtle.encrypt(
+          {
+            name: 'AES-GCM',
+            iv
+          },
+          key,
+          encoder.encode(j)
+        )
+
+        return [
+          await new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.onload = evt => {
+              resolve(
+                evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+              )
+            }
+
+            reader.readAsDataURL(
+              new Blob([encryptedJson], { type: 'application/octet-stream' })
+            )
+          }),
+          await new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.onload = evt => {
+              resolve(
+                evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+              )
+            }
+
+            reader.readAsDataURL(
+              new Blob([iv], { type: 'application/octet-stream' })
+            )
+          })
+        ]
+      }
+
+      function drawFrame() {
+        if (!singleFrame) {
+          requestId = requestAnimationFrame(drawFrame)
+        }
+
+        if (lines[lineIndex] !== lastLine) {
+          if (yRadio1.checked) {
+            if (backgroundRadio2.checked) {
+              canvas1Context.drawImage(
+                backgroundImage,
+                0,
+                0,
+                canvas1Context.canvas.width,
+                canvas1Context.canvas.height
+              )
+            } else {
+              canvas1Context.fillRect(
+                0,
+                0,
+                canvas1Context.canvas.width,
+                canvas1Context.canvas.height
+              )
+            }
+
+            if (lines[lineIndex].length > 0) {
+              canvas2Context.clearRect(0, 0, canvas2.width, canvas2.height)
+
+              if (!outlinesRadio2.checked) {
+                canvas2Context.fillText(lines[lineIndex], centerX, centerY)
+              }
+
+              if (!outlinesRadio1.checked) {
+                canvas2Context.strokeText(lines[lineIndex], centerX, centerY)
+              }
+
+              canvas1Context.drawImage(canvas2, 0, Math.random() * endY)
+            }
+          } else if (backgroundRadio2.checked) {
+            canvas1Context.drawImage(
+              backgroundImage,
+              0,
+              0,
+              canvas1Context.canvas.width,
+              canvas1Context.canvas.height
+            )
+
+            if (lines[lineIndex].length > 0) {
+              if (!outlinesRadio2.checked) {
+                canvas1Context.fillText(lines[lineIndex], centerX, centerY)
+              }
+
+              if (!outlinesRadio1.checked) {
+                canvas1Context.strokeText(lines[lineIndex], centerX, centerY)
+              }
+            }
+          } else if (outlinesRadio2.checked) {
+            canvas1Context.fillRect(
+              0,
+              0,
+              canvas1Context.canvas.width,
+              canvas1Context.canvas.height
+            )
+
+            if (lines[lineIndex].length > 0) {
+              canvas1Context.strokeText(lines[lineIndex], centerX, centerY)
+            }
+          } else {
+            canvas1Context.fillStyle = backgroundColor.value
+
+            canvas1Context.fillRect(
+              0,
+              0,
+              canvas1Context.canvas.width,
+              canvas1Context.canvas.height
+            )
+
+            if (lines[lineIndex].length > 0) {
+              if (!outlinesRadio2.checked) {
+                canvas1Context.fillStyle = textColor.value
+                canvas1Context.fillText(lines[lineIndex], centerX, centerY)
+              }
+
+              if (!outlinesRadio1.checked) {
+                canvas1Context.strokeText(lines[lineIndex], centerX, centerY)
+              }
+            }
+          }
+        }
+
+        lastLine = lines[lineIndex]
+        lineIndex = lineIndex === lines.length - 1 ? 0 : lineIndex + 1
+      }
+
+      async function togglePictureInPicture() {
+        if (window.documentPictureInPicture.window) {
+          window.documentPictureInPicture.window.close()
+        } else {
+          const pipWindow = await window.documentPictureInPicture.requestWindow(
+            {
+              width: canvas1Context.canvas.width,
+              height: canvas1Context.canvas.height
+            }
+          )
+
+          pipWindow.onpagehide = () => {
+            document.body.appendChild(
+              window.documentPictureInPicture.window.document.querySelector(
+                '#canvasDiv'
+              )
+            )
+          }
+
+          const style = document.createElement('style')
+
+          style.textContent = `${
+            'darkmode' in document.documentElement.dataset
+              ? ':root {\n  color-scheme: dark only;\n}\n\n'
+              : ''
+          }${
+            CSS.supports('max-width', '100dvw')
+              ? 'canvas, img {\n  max-width: 100dvw;\n  max-height: 100dvh;\n}'
+              : 'canvas, img {\n  max-width: 100vw;\n  max-height: 100vh;\n}'
+          }`
+
+          const trimmedName = document.querySelector('#name').value.trim()
+
+          pipWindow.document.title =
+            trimmedName.length === 0 ? 'Untitled' : trimmedName
+
+          pipWindow.document.head.appendChild(style)
+
+          pipWindow.document.body.appendChild(
+            document.querySelector('#canvasDiv')
+          )
+        }
+      }
+
+      if (location.search.length > 0) {
+        fetch(location.href)
+          .then(r => r.blob())
+          .then(blob => {
+            const a = document.createElement('a')
+            a.innerText = 'Save'
+            a.href = URL.createObjectURL(blob)
+            a.download = 'index.html'
+
+            document
+              .querySelector('body > div:first-of-type')
+              .style.setProperty('display', 'none')
+
+            document.body.appendChild(a)
+          })
+      }
+
+      if (location.hash.length > 0) {
+        ;(async () => {
+          const hashParts = await Promise.all(
+            location.hash
+              .substring(1)
+              .split(',')
+              .filter(part => part.length > 0 && part !== 'forceDarkMode=0')
+              .map(async part => {
+                const b = await (
+                  await fetch(`data:application/octet-stream;base64,${part}`)
+                ).arrayBuffer()
+
+                const a = new Uint8Array(b)
+
+                if (a[0] === 0) {
+                  return ' ' + part
+                } else {
+                  return decoder.decode(a)
+                }
+              })
+          )
+
+          for (const hashPart of hashParts) {
+            if (hashPart === ' ') {
+              document.querySelector('#settingsStartPreview').textContent =
+                'Preview'
+              document.querySelector('#padding').disabled = false
+              document.querySelector('#spacing').disabled = false
+              document.querySelector('#speedRadio1').disabled = true
+              document.querySelector('#speedRadio2').disabled = true
+              document.querySelector('#speedRadio3').disabled = true
+              yRadio1.disabled = true
+              document.querySelector('#yRadio2').disabled = true
+              document.querySelector('#exportAsRadio7').disabled = true
+              document.querySelector('#exportAsRadio8').disabled = true
+            } else if (
+              (hashPart[0] === '{' && !hashPart.startsWith('{empty}')) ||
+              hashPart[0] === '['
+            ) {
+              await loadState(JSON.parse(hashPart))
+            } else if (hashPart[0] === ' ') {
+              keyBase64 = hashPart.substring(1)
+            } else if (
+              hashPart.startsWith('js+/') ||
+              hashPart.startsWith('js+http://') ||
+              hashPart.startsWith('js+https://')
+            ) {
+              document.title = hashPart.substring(3)
+              document.querySelector('#name').value = hashPart.substring(3)
+
+              const jsScript = document.createElement('script')
+              jsScript.src = hashPart.substring(3)
+              document.body.appendChild(jsScript)
+            } else if (
+              hashPart[0] === '/' ||
+              hashPart.startsWith('http://') ||
+              hashPart.startsWith('https://')
+            ) {
+              document.title = hashPart
+              document.querySelector('#name').value = hashPart
+
+              if (parts.length === 0) {
+                const text = await (await fetch(hashPart)).text()
+
+                await loadState(
+                  JSON.parse(
+                    text
+                      .substring(text.indexOf(keyBase64.length > 0 ? '[' : '{'))
+                      .trim()
+                  )
+                )
+              } else {
+                await loadState({
+                  buffer: await (await fetch(hashPart)).arrayBuffer()
+                })
+              }
+            } else {
+              document.querySelector('#group1').value = hashPart
+            }
+          }
+        })()
+      }
+
+      document.querySelector('#file').onchange = async evt => {
+        if (evt.target.files.length > 0) {
+          if (parts.length === 0) {
+            const text = await evt.target.files[0].text()
+
+            document.querySelector('#file').value = ''
+
+            if (text.length === 0) {
+              return
+            }
+
+            if (
+              (text[0] === '{' && !text.startsWith('{empty}')) ||
+              text[0] === '['
+            ) {
+              await loadState(JSON.parse(text))
+            } else if (text[0] === '"') {
+              keyBase64 = JSON.parse(text)
+            } else if (text[0] === '/' || text.startsWith('loadState')) {
+              eval(text)
+            } else {
+              document.querySelector('#group1Checkbox').checked = true
+              document.querySelector('#group2Checkbox').checked = false
+              document.querySelector('#group3Checkbox').checked = false
+              document.querySelector('#group4Checkbox').checked = false
+              document.querySelector('#group5Checkbox').checked = false
+
+              document.querySelector('#group1').style.removeProperty('display')
+
+              document
+                .querySelector('#group2')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#group3')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#group4')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#group5')
+                .style.setProperty('display', 'none')
+
+              document.querySelector('#group1').value = text
+                .split('\n')
+                .map(s => s.trim())
+                .join('\n')
+            }
+          } else {
+            await loadState({
+              buffer: await evt.target.files[0].arrayBuffer()
+            })
+            document.querySelector('#file').value = ''
+          }
+        }
+      }
+
+      document.querySelector('#jsonJs').onclick = () => {
+        const text = prompt('JSON/JS:')?.trim() ?? ''
+
+        if (text.length === 0) {
+          return
+        }
+
+        if (text[0] === '{' || text[0] === '[') {
+          loadState(JSON.parse(text))
+        } else if (text[0] === '"') {
+          keyBase64 = JSON.parse(text)
+        } else if (
+          text.startsWith('js+/') ||
+          text.startsWith('js+http://') ||
+          text.startsWith('js+https://')
+        ) {
+          const jsScript = document.createElement('script')
+          jsScript.src = text.substring(3)
+          document.body.appendChild(jsScript)
+        } else if (
+          text[0] === '/' ||
+          text.startsWith('http://') ||
+          text.startsWith('https://')
+        ) {
+          fetch(text)
+            .then(r => r.text())
+            .then(rText => {
+              loadState(
+                JSON.parse(
+                  rText
+                    .substring(rText.indexOf(keyBase64.length > 0 ? '[' : '{'))
+                    .trim()
+                )
+              )
+            })
+        } else {
+          eval(text)
+        }
+      }
+
+      document.querySelector('#next').onclick = () => {
+        document
+          .querySelector('body > div:first-of-type')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#settings').style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#group1Checkbox').onclick = evt => {
+        if (evt.target.checked) {
+          document.querySelector('#group1').style.removeProperty('display')
+        } else {
+          document.querySelector('#group1').style.setProperty('display', 'none')
+        }
+      }
+
+      document.querySelector('#group2Checkbox').onclick = evt => {
+        if (evt.target.checked) {
+          document.querySelector('#group2').style.removeProperty('display')
+        } else {
+          document.querySelector('#group2').style.setProperty('display', 'none')
+        }
+      }
+
+      document.querySelector('#group3Checkbox').onclick = evt => {
+        if (evt.target.checked) {
+          document.querySelector('#group3').style.removeProperty('display')
+        } else {
+          document.querySelector('#group3').style.setProperty('display', 'none')
+        }
+      }
+
+      document.querySelector('#group4Checkbox').onclick = evt => {
+        if (evt.target.checked) {
+          document.querySelector('#group4').style.removeProperty('display')
+        } else {
+          document.querySelector('#group4').style.setProperty('display', 'none')
+        }
+      }
+
+      document.querySelector('#group5Checkbox').onclick = evt => {
+        if (evt.target.checked) {
+          document.querySelector('#group5').style.removeProperty('display')
+        } else {
+          document.querySelector('#group5').style.setProperty('display', 'none')
+        }
+      }
+
+      document.querySelector('#name').onblur = evt => {
+        const trimmedName = evt.target.value.trim()
+        document.title = trimmedName.length === 0 ? 'Untitled' : trimmedName
+      }
+
+      document.querySelector('#backgroundImageFile').onchange = async evt => {
+        if (backgroundImage !== null) {
+          backgroundImage = null
+          URL.revokeObjectURL(backgroundImageUrl)
+          backgroundImageBuffer = null
+          backgroundImageUrl = null
+        }
+
+        if (evt.target.files.length > 0) {
+          backgroundRadio2.disabled = false
+          backgroundImageBuffer = await evt.target.files[0].arrayBuffer()
+          backgroundImageUrl = URL.createObjectURL(evt.target.files[0])
+          backgroundImage = new Image()
+          backgroundImage.src = backgroundImageUrl
+          backgroundRadio2.checked = true
+        } else {
+          document.querySelector('#backgroundRadio1').checked = true
+          backgroundRadio2.disabled = true
+        }
+      }
+
+      document.querySelector('#fontFile').onchange = async evt => {
+        if (fontFileFace !== null) {
+          document.fonts.delete(fontFileFace)
+          fontFileFace = null
+        }
+
+        if (evt.target.files.length > 0) {
+          fontBuffer = await evt.target.files[0].arrayBuffer()
+          fontFileFace = new FontFace('Font File', fontBuffer.slice())
+          document.fonts.add(fontFileFace)
+          fontFileFace.load()
+          document.querySelector('#fontRadio2').checked = true
+        } else {
+          document.querySelector('#fontRadio1').checked = true
+        }
+
+        document.querySelector('#fontRadio2').disabled =
+          evt.target.files.length === 0
+      }
+
+      document.querySelector('#exportAsRadio1').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = false
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#exportAsRadio2').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = false
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#exportAsRadio3').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#exportAsRadio4').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = false
+      }
+
+      document.querySelector('#exportAsRadio5').onchange = () => {
+        document.querySelector('#quality').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = false
+      }
+
+      document.querySelector('#exportAsRadio6').onchange = () => {
+        document.querySelector('#quality').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = false
+      }
+
+      document.querySelector('#exportAsRadio7').onchange = () => {
+        document.querySelector('#quality').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#exportAsRadio8').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = true
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#exportAsRadio9').onchange = () => {
+        document.querySelector('#quality').disabled = true
+        document.querySelector('#encryptionAlgorithmRadio1').disabled = false
+        document.querySelector('#encryptionAlgorithmRadio2').disabled = false
+        document.querySelector('#showImage').disabled = true
+      }
+
+      document.querySelector('#export9Button').onclick = () => {
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#export9ButtonDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#export9ButtonDivBack').onclick = () => {
+        document
+          .querySelector('#export9ButtonDiv')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('img').onload = () => {
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#exportImageDiv')
+          .style.setProperty('display', 'flex')
+      }
+
+      document.querySelector('img').onclick = () => {
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+
+        document
+          .querySelector('#exportImageDiv')
+          .style.setProperty('display', 'none')
+      }
+
+      document.querySelector('canvas').onclick = async evt => {
+        if (
+          'documentPictureInPicture' in window &&
+          (window.documentPictureInPicture.window ||
+            evt.shiftKey ||
+            evt.ctrlKey ||
+            evt.altKey)
+        ) {
+          await togglePictureInPicture()
+        } else {
+          cancelAnimationFrame(requestId)
+          requestId = null
+
+          if (
+            'wakeLock' in navigator &&
+            wakeLock !== null &&
+            !wakeLock.released
+          ) {
+            wakeLock.release().then(() => {
+              wakeLock = null
+            })
+          }
+
+          document
+            .querySelector('#settings')
+            .style.setProperty('display', 'grid')
+
+          document
+            .querySelector('#canvasDiv')
+            .style.setProperty('display', 'none')
+
+          centerX = 0
+          centerY = 0
+          endY = 0
+          lineIndex = 0
+          lastLine = ''
+
+          while (lines.length > 0) {
+            lines.pop()
+          }
+        }
+      }
+
+      document.querySelector('#settingsBack').onclick = () => {
+        document
+          .querySelector('body > div:first-of-type')
+          .style.setProperty('display', 'grid')
+
+        document.querySelector('#settings').style.setProperty('display', 'none')
+      }
+
+      document.querySelector('#settingsStartPreview').onclick = async evt => {
+        const group1 = document.querySelector('#group1Checkbox').checked
+          ? document
+              .querySelector('#group1')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+              .map(l => (l === '{empty}' ? '' : l))
+          : []
+
+        const group2 = document.querySelector('#group2Checkbox').checked
+          ? document
+              .querySelector('#group2')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+              .map(l => (l === '{empty}' ? '' : l))
+          : []
+
+        const group3 = document.querySelector('#group3Checkbox').checked
+          ? document
+              .querySelector('#group3')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+              .map(l => (l === '{empty}' ? '' : l))
+          : []
+
+        const group4 = document.querySelector('#group4Checkbox').checked
+          ? document
+              .querySelector('#group4')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+              .map(l => (l === '{empty}' ? '' : l))
+          : []
+
+        const group5 = document.querySelector('#group5Checkbox').checked
+          ? document
+              .querySelector('#group5')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+              .map(l => (l === '{empty}' ? '' : l))
+          : []
+
+        if (
+          yRadio1.disabled ||
+          document.querySelector('#speedRadio3').checked
+        ) {
+          lines = [...group1, ...group2, ...group3, ...group4, ...group5]
+        } else if (document.querySelector('#speedRadio2').checked) {
+          lines = [
+            ...group1,
+            ...group2,
+            ...group3,
+            ...group4,
+            ...group5
+          ].flatMap(l => Array(2).fill(l))
+        } else {
+          lines = [
+            ...group1,
+            ...group2,
+            ...group3,
+            ...group4,
+            ...group5
+          ].flatMap(l => Array(4).fill(l))
+        }
+
+        if (lines.length === 0) {
+          return
+        }
+
+        canvas1Context.canvas.width = parseInt(
+          document.querySelector('#width').value
+        )
+
+        canvas1Context.canvas.height = parseInt(
+          document.querySelector('#height').value
+        )
+
+        canvas1Context.font = `${document.querySelector('#fontSize').value}px ${
+          document.querySelector('#fontRadio2').checked
+            ? '"Font File"'
+            : document.querySelector('#font').value
+        }`
+
+        if (yRadio1.checked || yRadio1.disabled) {
+          if (canvas2 === null) {
+            canvas2 = document.createElement('canvas')
+            canvas2Context = canvas2.getContext('2d')
+          }
+
+          canvas2.width = canvas1Context.canvas.width
+          canvas2.height = Math.ceil(
+            parseInt(document.querySelector('#fontSize').value) * 1.25
+          )
+          canvas2Context.font = canvas1Context.font
+          canvas2Context.textAlign = 'center'
+          canvas2Context.textBaseline = 'middle'
+          centerX = canvas2.width / 2
+          centerY = canvas2.height / 2
+          endY = canvas1Context.canvas.height - canvas2.height - 1
+
+          if (backgroundRadio2.checked) {
+            if (outlinesRadio1.checked) {
+              canvas2Context.fillStyle = textColor.value
+            } else if (outlinesRadio2.checked) {
+              canvas2Context.strokeStyle = outlineColor.value
+            } else {
+              canvas2Context.fillStyle = textColor.value
+              canvas2Context.strokeStyle = outlineColor.value
+            }
+          } else if (outlinesRadio1.checked) {
+            canvas1Context.fillStyle = backgroundColor.value
+            canvas2Context.fillStyle = textColor.value
+          } else {
+            canvas1Context.fillStyle = backgroundColor.value
+
+            if (outlinesRadio3.checked) {
+              canvas2Context.fillStyle = textColor.value
+            }
+
+            canvas2Context.strokeStyle = outlineColor.value
+          }
+        } else {
+          canvas1Context.textBaseline = 'middle'
+          canvas1Context.textAlign = 'center'
+          centerX = canvas1Context.canvas.width / 2
+          centerY = canvas1Context.canvas.height / 2
+
+          if (backgroundRadio2.checked) {
+            if (outlinesRadio1.checked) {
+              canvas1Context.fillStyle = textColor.value
+            } else if (outlinesRadio2.checked) {
+              canvas1Context.strokeStyle = outlineColor.value
+            } else {
+              canvas1Context.fillStyle = textColor.value
+              canvas1Context.strokeStyle = outlineColor.value
+            }
+          } else if (outlinesRadio2.checked) {
+            canvas1Context.fillStyle = backgroundColor.value
+            canvas1Context.strokeStyle = outlineColor.value
+          } else if (outlinesRadio3.checked) {
+            canvas1Context.strokeStyle = outlineColor.value
+          }
+        }
+
+        if ('wakeLock' in navigator) {
+          try {
+            wakeLock = await navigator.wakeLock.request('screen')
+          } catch {}
+        }
+
+        if (yRadio1.disabled) {
+          if (backgroundRadio2.checked) {
+            canvas1Context.drawImage(
+              backgroundImage,
+              0,
+              0,
+              canvas1Context.canvas.width,
+              canvas1Context.canvas.height
+            )
+          } else {
+            canvas1Context.fillRect(
+              0,
+              0,
+              canvas1Context.canvas.width,
+              canvas1Context.canvas.height
+            )
+          }
+
+          const padding =
+            canvas2.height *
+            parseFloat(document.querySelector('#padding').value)
+
+          const spacing =
+            canvas2.height *
+            parseFloat(document.querySelector('#spacing').value)
+
+          for (let i = 0; i < lines.length; i++) {
+            canvas2Context.clearRect(0, 0, canvas2.width, canvas2.height)
+
+            if (!outlinesRadio2.checked) {
+              canvas2Context.fillText(lines[i], centerX, centerY)
+            }
+
+            if (!outlinesRadio1.checked) {
+              canvas2Context.strokeText(lines[i], centerX, centerY)
+            }
+
+            canvas1Context.drawImage(canvas2, 0, padding + spacing * i)
+          }
+        } else {
+          canvas1Context.clearRect(
+            0,
+            0,
+            canvas1Context.canvas.width,
+            canvas1Context.canvas.height
+          )
+        }
+
+        document.querySelector('#settings').style.setProperty('display', 'none')
+
+        document
+          .querySelector('#canvasDiv')
+          .style.setProperty('display', 'flex')
+
+        if (
+          'documentPictureInPicture' in window &&
+          (evt.shiftKey || evt.ctrlKey || evt.altKey)
+        ) {
+          await togglePictureInPicture()
+        }
+
+        if (!yRadio1.disabled) {
+          drawFrame()
+        }
+      }
+
+      document.querySelector('#settingsExport').onclick = () => {
+        document.querySelector('#settings').style.setProperty('display', 'none')
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+
+        singleFrame = true
+      }
+
+      document.querySelector('#exportBack').onclick = () => {
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#settings').style.setProperty('display', 'grid')
+
+        singleFrame = false
+
+        while (lines.length > 0) {
+          lines.pop()
+        }
+      }
+
+      document.querySelector('#export').onclick = async () => {
+        if (
+          document.querySelector('#exportAsRadio1').checked ||
+          document.querySelector('#exportAsRadio2').checked ||
+          document.querySelector('#exportAsRadio3').checked ||
+          document.querySelector('#exportAsRadio9').checked
+        ) {
+          const groups = {
+            1: document
+              .querySelector('#group1')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean),
+            2: document
+              .querySelector('#group2')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean),
+            3: document
+              .querySelector('#group3')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean),
+            4: document
+              .querySelector('#group4')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean),
+            5: document
+              .querySelector('#group5')
+              .value.split('\n')
+              .map(l => l.trim())
+              .filter(Boolean)
+          }
+
+          const groupsString = ['1', '2', '3', '4', '5']
+            .map(g => (groups[g].length === 0 ? '' : g))
+            .join('')
+
+          const j =
+            document.querySelector('#exportAsRadio9').checked &&
+            !document.querySelector('#export9LinesSettings').checked
+              ? '{}'
+              : getJson({
+                  backgroundColor: backgroundColor.value.trim(),
+                  textColor: textColor.value.trim(),
+                  outlineColor: outlineColor.value.trim(),
+                  lines:
+                    groupsString === '1' &&
+                    !document.querySelector('#exportAsRadio3').checked &&
+                    !(
+                      document.querySelector('#exportAsRadio9').checked &&
+                      document.querySelector('#encryptionAlgorithmRadio1')
+                        .checked
+                    )
+                      ? groups['1']
+                      : [],
+                  1: groupsString === '1' ? [] : groups['1'],
+                  2: groupsString.includes('2') ? groups['2'] : [],
+                  3: groupsString.includes('3') ? groups['3'] : [],
+                  4: groupsString.includes('4') ? groups['4'] : [],
+                  5: groupsString.includes('5') ? groups['5'] : []
+                })
+
+          if (document.querySelector('#exportAsRadio1').checked) {
+            if (document.querySelector('#encryptionAlgorithmRadio1').checked) {
+              if (j !== '{}') {
+                document.querySelector('#json').value = j
+
+                exportUrls[1] = URL.createObjectURL(
+                  new Blob([j], { type: 'application/json' })
+                )
+
+                const saveDiv = document.querySelector('#exportJsonSaveDiv')
+
+                const trimmedName = document.querySelector('#name').value.trim()
+                const a = document.createElement('a')
+                a.innerText = 'Save'
+                a.href = exportUrls[1]
+                a.download = `${
+                  trimmedName.length === 0 ? 'Untitled' : trimmedName
+                }.json`
+
+                saveDiv.appendChild(a)
+              }
+
+              if (yRadio1.disabled) {
+                document.querySelector('#jsonHashLink').value = `${
+                  location.hash.length === 0
+                    ? location.href
+                    : location.href.substring(0, location.href.indexOf('#'))
+                }#IA==`
+              }
+
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#exportJsonDiv')
+                .style.setProperty('display', 'grid')
+            } else if (j !== '{}') {
+              const [encryptedJson, iv] = await encryptJson(j)
+              const arrayString = JSON.stringify([0, encryptedJson, iv])
+
+              document.querySelector('#json').value = arrayString
+
+              const hashParts = [
+                yRadio1.disabled ? 'IA==' : '',
+                keyBase64
+              ].filter(Boolean)
+
+              document.querySelector('#jsonHashLink').value = `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+
+              exportUrls[1] = URL.createObjectURL(
+                new Blob([arrayString], { type: 'application/json' })
+              )
+
+              const saveDiv = document.querySelector('#exportJsonSaveDiv')
+
+              const trimmedName = document.querySelector('#name').value.trim()
+              const a = document.createElement('a')
+              a.innerText = 'Save'
+              a.href = exportUrls[1]
+              a.download = `${
+                trimmedName.length === 0 ? 'Untitled' : trimmedName
+              }.js`
+
+              saveDiv.appendChild(a)
+
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#exportJsonDiv')
+                .style.setProperty('display', 'grid')
+            }
+          } else if (document.querySelector('#exportAsRadio2').checked) {
+            if (document.querySelector('#encryptionAlgorithmRadio1').checked) {
+              if (j !== '{}') {
+                const js = `loadState('${await new Promise(
+                  (resolve, reject) => {
+                    const reader = new FileReader()
+
+                    reader.onload = evt => {
+                      resolve(
+                        evt.target.result.substring(
+                          evt.target.result.indexOf(',') + 1
+                        )
+                      )
+                    }
+
+                    reader.readAsDataURL(
+                      new Blob([j], { type: 'application/json' })
+                    )
+                  }
+                )}')`
+
+                document.querySelector('#js').value = js
+
+                exportUrls[1] = URL.createObjectURL(
+                  new Blob([js], { type: 'text/javascript' })
+                )
+
+                const saveDiv = document.querySelector('#exportJsSaveDiv')
+
+                const trimmedName = document.querySelector('#name').value.trim()
+                const a = document.createElement('a')
+                a.innerText = 'Save'
+                a.href = exportUrls[1]
+                a.download = `${
+                  trimmedName.length === 0 ? 'Untitled' : trimmedName
+                }.js`
+
+                saveDiv.appendChild(a)
+              }
+
+              if (yRadio1.disabled) {
+                document.querySelector('#jsHashLink').value = `${
+                  location.hash.length === 0
+                    ? location.href
+                    : location.href.substring(0, location.href.indexOf('#'))
+                }#IA==`
+              }
+
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#exportJsDiv')
+                .style.setProperty('display', 'grid')
+            } else if (j !== '{}') {
+              const [encryptedJson, iv] = await encryptJson(j)
+              const js = `loadState(0,'${encryptedJson}','${iv}')`
+
+              document.querySelector('#js').value = js
+
+              const hashParts = [
+                yRadio1.disabled ? 'IA==' : '',
+                keyBase64
+              ].filter(Boolean)
+
+              document.querySelector('#jsHashLink').value = `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+
+              exportUrls[1] = URL.createObjectURL(
+                new Blob([js], { type: 'text/javascript' })
+              )
+
+              const saveDiv = document.querySelector('#exportJsSaveDiv')
+
+              const trimmedName = document.querySelector('#name').value.trim()
+              const a = document.createElement('a')
+              a.innerText = 'Save'
+              a.href = exportUrls[1]
+              a.download = `${
+                trimmedName.length === 0 ? 'Untitled' : trimmedName
+              }.js`
+
+              saveDiv.appendChild(a)
+
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#exportJsDiv')
+                .style.setProperty('display', 'grid')
+            }
+          } else if (document.querySelector('#exportAsRadio3').checked) {
+            const hashParts = [
+              yRadio1.disabled ? 'IA==' : '',
+              groupsString === '1'
+                ? await new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+
+                    reader.onload = evt => {
+                      resolve(
+                        evt.target.result.substring(
+                          evt.target.result.indexOf(',') + 1
+                        )
+                      )
+                    }
+
+                    reader.readAsDataURL(
+                      new Blob([groups['1'].join('\n')], {
+                        type: 'text/plain'
+                      })
+                    )
+                  })
+                : '',
+              j === '{}'
+                ? ''
+                : await new Promise((resolve, reject) => {
+                    const reader = new FileReader()
+
+                    reader.onload = evt => {
+                      resolve(
+                        evt.target.result.substring(
+                          evt.target.result.indexOf(',') + 1
+                        )
+                      )
+                    }
+
+                    reader.readAsDataURL(
+                      new Blob([j], { type: 'application/json' })
+                    )
+                  })
+            ].filter(Boolean)
+
+            if (hashParts.length > 0) {
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#exportLinkDiv')
+                .style.setProperty('display', 'grid')
+
+              document.querySelector('#link').value = `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+            }
+          } else {
+            let fileParts = []
+
+            if (document.querySelector('#export9LinesSettings').checked) {
+              if (
+                document.querySelector('#encryptionAlgorithmRadio1').checked &&
+                groupsString === '1'
+              ) {
+                fileParts.push(encoder.encode(groups['1'].join('\n')))
+                parts.push({ type: 'lines', size: fileParts[0].byteLength })
+              }
+
+              if (j !== '{}') {
+                if (
+                  document.querySelector('#encryptionAlgorithmRadio1').checked
+                ) {
+                  fileParts.push(encoder.encode(j))
+                } else {
+                  const [encryptedJson, iv] = await encryptJson(j)
+
+                  fileParts.push(
+                    encoder.encode(JSON.stringify([0, encryptedJson, iv]))
+                  )
+                }
+
+                parts.push({
+                  type: 'json',
+                  size: fileParts[fileParts.length - 1].byteLength
+                })
+              }
+            }
+
+            if (
+              document.querySelector('#export9BackgroundImage').checked &&
+              backgroundImageBuffer !== null
+            ) {
+              fileParts.push(backgroundImageBuffer)
+
+              parts.push({
+                type: 'backgroundImage',
+                size: backgroundImageBuffer.byteLength
+              })
+            }
+
+            if (
+              document.querySelector('#export9Font').checked &&
+              fontBuffer !== null
+            ) {
+              fileParts.push(fontBuffer)
+              parts.push({ type: 'font', size: fontBuffer.byteLength })
+            }
+
+            if (fileParts.length > 1) {
+              const hashParts = [
+                yRadio1.disabled ? 'IA==' : '',
+                await new Promise((resolve, reject) => {
+                  const reader = new FileReader()
+
+                  reader.onload = evt => {
+                    resolve(
+                      evt.target.result.substring(
+                        evt.target.result.indexOf(',') + 1
+                      )
+                    )
+                  }
+
+                  reader.readAsDataURL(
+                    new Blob([JSON.stringify({ parts })], {
+                      type: 'application/json'
+                    })
+                  )
+                }),
+                keyBase64
+              ].filter(Boolean)
+
+              document.querySelector('#export9HashLink').value = `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+
+              exportUrls[1] = URL.createObjectURL(
+                new Blob(fileParts, { type: 'application/octet-stream' })
+              )
+
+              const saveDiv = document.querySelector('#export9SaveDiv')
+
+              const trimmedName = document.querySelector('#name').value.trim()
+              const a = document.createElement('a')
+              a.innerText = 'Save'
+              a.href = exportUrls[1]
+              a.download = `${
+                trimmedName.length === 0 ? 'Untitled' : trimmedName
+              }.bin`
+
+              saveDiv.appendChild(a)
+
+              document
+                .querySelector('#exportDiv')
+                .style.setProperty('display', 'none')
+
+              document
+                .querySelector('#export9Div')
+                .style.setProperty('display', 'grid')
+            } else {
+              while (parts.length > 0) {
+                parts.pop()
+              }
+            }
+          }
+        } else {
+          const format = (function () {
+            if (document.querySelector('#exportAsRadio4').checked) {
+              return 'png'
+            } else if (document.querySelector('#exportAsRadio5').checked) {
+              return 'webp'
+            } else if (document.querySelector('#exportAsRadio6').checked) {
+              return 'jpeg'
+            } else if (document.querySelector('#exportAsRadio7').checked) {
+              return 'mjpeg'
+            } else {
+              return 'rgba'
+            }
+          })()
+
+          const group1 = document.querySelector('#group1Checkbox').checked
+            ? document
+                .querySelector('#group1')
+                .value.split('\n')
+                .map(l => l.trim())
+                .filter(Boolean)
+                .map(l => (l === '{empty}' ? '' : l))
+            : []
+
+          const group2 = document.querySelector('#group2Checkbox').checked
+            ? document
+                .querySelector('#group2')
+                .value.split('\n')
+                .map(l => l.trim())
+                .filter(Boolean)
+                .map(l => (l === '{empty}' ? '' : l))
+            : []
+
+          const group3 = document.querySelector('#group3Checkbox').checked
+            ? document
+                .querySelector('#group3')
+                .value.split('\n')
+                .map(l => l.trim())
+                .filter(Boolean)
+                .map(l => (l === '{empty}' ? '' : l))
+            : []
+
+          const group4 = document.querySelector('#group4Checkbox').checked
+            ? document
+                .querySelector('#group4')
+                .value.split('\n')
+                .map(l => l.trim())
+                .filter(Boolean)
+                .map(l => (l === '{empty}' ? '' : l))
+            : []
+
+          const group5 = document.querySelector('#group5Checkbox').checked
+            ? document
+                .querySelector('#group5')
+                .value.split('\n')
+                .map(l => l.trim())
+                .filter(Boolean)
+                .map(l => (l === '{empty}' ? '' : l))
+            : []
+
+          if (
+            yRadio1.disabled ||
+            document.querySelector('#speedRadio3').checked
+          ) {
+            lines = [...group1, ...group2, ...group3, ...group4, ...group5]
+          } else if (document.querySelector('#speedRadio2').checked) {
+            lines = [
+              ...group1,
+              ...group2,
+              ...group3,
+              ...group4,
+              ...group5
+            ].flatMap(l => Array(2).fill(l))
+          } else {
+            lines = [
+              ...group1,
+              ...group2,
+              ...group3,
+              ...group4,
+              ...group5
+            ].flatMap(l => Array(4).fill(l))
+          }
+
+          if (lines.length === 0) {
+            return
+          }
+
+          canvas1Context.canvas.width = parseInt(
+            document.querySelector('#width').value
+          )
+
+          canvas1Context.canvas.height = parseInt(
+            document.querySelector('#height').value
+          )
+
+          canvas1Context.font = `${
+            document.querySelector('#fontSize').value
+          }px ${
+            document.querySelector('#fontRadio2').checked
+              ? '"Font File"'
+              : document.querySelector('#font').value
+          }`
+
+          if (yRadio1.checked || yRadio1.disabled) {
+            if (canvas2 === null) {
+              canvas2 = document.createElement('canvas')
+              canvas2Context = canvas2.getContext('2d')
+            }
+
+            canvas2.width = canvas1Context.canvas.width
+            canvas2.height = Math.ceil(
+              parseInt(document.querySelector('#fontSize').value) * 1.25
+            )
+            canvas2Context.font = canvas1Context.font
+            canvas2Context.textAlign = 'center'
+            canvas2Context.textBaseline = 'middle'
+            centerX = canvas2.width / 2
+            centerY = canvas2.height / 2
+            endY = canvas1Context.canvas.height - canvas2.height - 1
+
+            if (backgroundRadio2.checked) {
+              if (outlinesRadio1.checked) {
+                canvas2Context.fillStyle = textColor.value
+              } else if (outlinesRadio2.checked) {
+                canvas2Context.strokeStyle = outlineColor.value
+              } else {
+                canvas2Context.fillStyle = textColor.value
+                canvas2Context.strokeStyle = outlineColor.value
+              }
+            } else if (outlinesRadio1.checked) {
+              canvas1Context.fillStyle = backgroundColor.value
+              canvas2Context.fillStyle = textColor.value
+            } else {
+              canvas1Context.fillStyle = backgroundColor.value
+
+              if (outlinesRadio3.checked) {
+                canvas2Context.fillStyle = textColor.value
+              }
+
+              canvas2Context.strokeStyle = outlineColor.value
+            }
+          } else {
+            canvas1Context.textBaseline = 'middle'
+            canvas1Context.textAlign = 'center'
+            centerX = canvas1Context.canvas.width / 2
+            centerY = canvas1Context.canvas.height / 2
+
+            if (backgroundRadio2.checked) {
+              if (outlinesRadio1.checked) {
+                canvas1Context.fillStyle = textColor.value
+              } else if (outlinesRadio2.checked) {
+                canvas1Context.strokeStyle = outlineColor.value
+              } else {
+                canvas1Context.fillStyle = textColor.value
+                canvas1Context.strokeStyle = outlineColor.value
+              }
+            } else if (outlinesRadio2.checked) {
+              canvas1Context.fillStyle = backgroundColor.value
+              canvas1Context.strokeStyle = outlineColor.value
+            } else if (outlinesRadio3.checked) {
+              canvas1Context.strokeStyle = outlineColor.value
+            }
+          }
+
+          if (format !== 'png') {
+            quality = parseFloat(document.querySelector('#quality').value)
+          }
+
+          if (format === 'mjpeg' || format === 'rgba') {
+            const skip = parseInt(prompt('Frames to skip:')?.trim() ?? '')
+
+            if (Number.isNaN(skip) || skip < 0) {
+              return
+            }
+
+            const frames = parseInt(prompt('Frames:')?.trim() ?? '')
+
+            if (Number.isNaN(frames) || frames < 1) {
+              return
+            }
+
+            document
+              .querySelector('#exportDiv')
+              .style.setProperty('display', 'none')
+
+            document
+              .querySelector('#exportFileDiv')
+              .style.setProperty('display', 'grid')
+
+            for (let i = 0; i < skip; i++) {
+              drawFrame()
+            }
+
+            const progressSpan = document.querySelector('#exportFileProgress')
+
+            if (format === 'mjpeg') {
+              progressSpan.removeAttribute('style')
+              document.documentElement.dataset.mjpegwait = '1'
+            }
+
+            for (let i = 0; i < frames; i++) {
+              if (format === 'mjpeg') {
+                await new Promise((resolve, reject) => {
+                  drawFrame()
+
+                  canvas1Context.canvas.toBlob(
+                    blob => {
+                      videoFrames.push(blob)
+
+                      progressSpan.textContent = `${Math.trunc(
+                        (i / frames) * 100
+                      )}%`
+
+                      resolve()
+                    },
+                    'image/jpeg',
+                    quality
+                  )
+                })
+              } else {
+                drawFrame()
+
+                videoFrames.push(
+                  new Blob([
+                    canvas1Context.getImageData(
+                      0,
+                      0,
+                      canvas1Context.canvas.width,
+                      canvas1Context.canvas.height
+                    ).data
+                  ])
+                )
+              }
+            }
+
+            centerX = 0
+            centerY = 0
+            endY = 0
+            lineIndex = 0
+            lastLine = ''
+            quality = 0
+
+            if (format === 'mjpeg') {
+              progressSpan.textContent = '0%'
+              progressSpan.style.setProperty('display', 'none')
+              delete document.documentElement.dataset.mjpegwait
+            }
+
+            exportUrls[1] = URL.createObjectURL(
+              new Blob(videoFrames, { type: 'application/octet-stream' })
+            )
+
+            const saveSpan = document.querySelector('#fileSaveSpan')
+
+            saveSpan.removeAttribute('style')
+
+            document.querySelector('#exportFileBack').removeAttribute('style')
+
+            const trimmedName = document.querySelector('#name').value.trim()
+            const a = document.createElement('a')
+            a.innerText = 'Save'
+            a.href = exportUrls[1]
+            a.download = `${
+              trimmedName.length === 0 ? 'Untitled' : trimmedName
+            }.${format}`
+
+            saveSpan.appendChild(a)
+          } else {
+            let frame = null
+
+            if (yRadio1.disabled) {
+              if (backgroundRadio2.checked) {
+                canvas1Context.drawImage(
+                  backgroundImage,
+                  0,
+                  0,
+                  canvas1Context.canvas.width,
+                  canvas1Context.canvas.height
+                )
+              } else {
+                canvas1Context.fillRect(
+                  0,
+                  0,
+                  canvas1Context.canvas.width,
+                  canvas1Context.canvas.height
+                )
+              }
+
+              const padding =
+                canvas2.height *
+                parseFloat(document.querySelector('#padding').value)
+
+              const spacing =
+                canvas2.height *
+                parseFloat(document.querySelector('#spacing').value)
+
+              for (let i = 0; i < lines.length; i++) {
+                canvas2Context.clearRect(0, 0, canvas2.width, canvas2.height)
+
+                if (!outlinesRadio2.checked) {
+                  canvas2Context.fillText(lines[i], centerX, centerY)
+                }
+
+                if (!outlinesRadio1.checked) {
+                  canvas2Context.strokeText(lines[i], centerX, centerY)
+                }
+
+                canvas1Context.drawImage(canvas2, 0, padding + spacing * i)
+              }
+            } else {
+              frame = parseInt(prompt('Frame:')?.trim() ?? '')
+
+              if (Number.isNaN(frame) || frame < 1) {
+                return
+              }
+
+              for (let i = 0; i < frame; i++) {
+                drawFrame()
+              }
+            }
+
+            canvas1Context.canvas.toBlob(
+              blob => {
+                let exportUrl = document.querySelector('#showImage').checked
+                  ? 0
+                  : 1
+
+                if (exportUrls[exportUrl] !== null) {
+                  URL.revokeObjectURL(exportUrls[exportUrl])
+                  exportUrls[exportUrl] = null
+                }
+
+                centerX = 0
+                centerY = 0
+                endY = 0
+                lineIndex = 0
+                lastLine = ''
+                quality = 0
+
+                exportUrls[exportUrl] = URL.createObjectURL(blob)
+
+                if (exportUrl === 0) {
+                  document.querySelector('img').src = exportUrls[0]
+                } else {
+                  document
+                    .querySelector('#exportDiv')
+                    .style.setProperty('display', 'none')
+
+                  document
+                    .querySelector('#exportFileDiv')
+                    .style.setProperty('display', 'grid')
+
+                  const saveSpan = document.querySelector('#fileSaveSpan')
+
+                  saveSpan.removeAttribute('style')
+
+                  document
+                    .querySelector('#exportFileBack')
+                    .removeAttribute('style')
+
+                  const trimmedName = document
+                    .querySelector('#name')
+                    .value.trim()
+                  const a = document.createElement('a')
+                  a.innerText = 'Save'
+                  a.href = exportUrls[exportUrl]
+                  a.download = `${
+                    trimmedName.length === 0 ? 'Untitled' : trimmedName
+                  }${yRadio1.disabled ? '' : '-' + frame}.${
+                    format === 'jpeg' ? 'jpg' : format
+                  }`
+
+                  saveSpan.appendChild(a)
+                }
+              },
+              ...(format === 'image/png'
+                ? ['image/png']
+                : [`image/${format}`, quality])
+            )
+          }
+        }
+      }
+
+      document.querySelector('#exportJsonBack').onclick = () => {
+        document
+          .querySelector('#exportJsonDiv')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#json').value = ''
+        document.querySelector('#jsonLink').value = ''
+        document.querySelector('#jsonHashLink').value = ''
+        keyBase64 = ''
+
+        if (exportUrls[1] !== null) {
+          document
+            .querySelector('#exportJsonSaveDiv')
+            .removeChild(document.querySelector('#exportJsonSaveDiv a'))
+
+          URL.revokeObjectURL(exportUrls[1])
+          exportUrls[1] = null
+        }
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#jsonLink').onblur = async () => {
+        const link = document.querySelector('#jsonLink').value.trim()
+
+        const hashParts = [
+          yRadio1.disabled ? 'IA==' : '',
+          keyBase64,
+          await new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.onload = evt => {
+              resolve(
+                evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+              )
+            }
+
+            reader.readAsDataURL(new Blob([link], { type: 'text/plain' }))
+          })
+        ].filter(Boolean)
+
+        document.querySelector('#jsonHashLink').value =
+          hashParts.length > 0
+            ? `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+            : ''
+      }
+
+      document.querySelector('#exportJsBack').onclick = () => {
+        document
+          .querySelector('#exportJsDiv')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#js').value = ''
+        document.querySelector('#jsLink').value = ''
+        document.querySelector('#jsHashLink').value = ''
+        keyBase64 = ''
+
+        if (exportUrls[1] !== null) {
+          document
+            .querySelector('#exportJsSaveDiv')
+            .removeChild(document.querySelector('#exportJsSaveDiv a'))
+
+          URL.revokeObjectURL(exportUrls[1])
+          exportUrls[1] = null
+        }
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#jsLink').onblur = async () => {
+        const link = document.querySelector('#jsLink').value.trim()
+
+        const hashParts = [
+          yRadio1.disabled ? 'IA==' : '',
+          keyBase64,
+          await new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.onload = evt => {
+              resolve(
+                evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+              )
+            }
+
+            reader.readAsDataURL(
+              new Blob(['js+' + link], { type: 'text/plain' })
+            )
+          })
+        ].filter(Boolean)
+
+        document.querySelector('#jsHashLink').value =
+          hashParts.length > 0
+            ? `${
+                location.hash.length === 0
+                  ? location.href
+                  : location.href.substring(0, location.href.indexOf('#'))
+              }#${hashParts.join(',')}`
+            : ''
+      }
+
+      document.querySelector('#exportLinkBack').onclick = () => {
+        document
+          .querySelector('#exportLinkDiv')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#link').value = ''
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#exportLinkOpenInNewTab').onclick = () => {
+        window.open(document.querySelector('#link').value)
+      }
+
+      document.querySelector('#exportFileBack').onclick = () => {
+        document
+          .querySelector('#exportFileBack')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#exportFileDiv')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#fileSaveSpan')
+          .removeChild(document.querySelector('#fileSaveSpan a'))
+
+        URL.revokeObjectURL(exportUrls[1])
+        exportUrls[1] = null
+
+        while (videoFrames.length > 0) {
+          videoFrames.pop()
+        }
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#exportLinkBack').onclick = () => {
+        document
+          .querySelector('#exportLinkDiv')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#link').value = ''
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#exportLinkOpenInNewTab').onclick = () => {
+        window.open(document.querySelector('#link').value)
+      }
+
+      document.querySelector('#exportFileBack').onclick = () => {
+        document
+          .querySelector('#exportFileBack')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#exportFileDiv')
+          .style.setProperty('display', 'none')
+
+        document
+          .querySelector('#fileSaveSpan')
+          .removeChild(document.querySelector('#fileSaveSpan a'))
+
+        URL.revokeObjectURL(exportUrls[1])
+        exportUrls[1] = null
+
+        while (videoFrames.length > 0) {
+          videoFrames.pop()
+        }
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#export9Back').onclick = () => {
+        document
+          .querySelector('#export9Div')
+          .style.setProperty('display', 'none')
+
+        document.querySelector('#export9FileLink').value = ''
+        document.querySelector('#export9HashLink').value = ''
+        keyBase64 = ''
+
+        if (exportUrls[1] !== null) {
+          document
+            .querySelector('#export9SaveDiv')
+            .removeChild(document.querySelector('#export9SaveDiv a'))
+
+          URL.revokeObjectURL(exportUrls[1])
+          exportUrls[1] = null
+        }
+
+        while (parts.length > 0) {
+          parts.pop()
+        }
+
+        document
+          .querySelector('#exportDiv')
+          .style.setProperty('display', 'grid')
+      }
+
+      document.querySelector('#export9FileLink').onblur = async () => {
+        const link = document.querySelector('#export9FileLink').value.trim()
+
+        const hashParts = [
+          yRadio1.disabled ? 'IA==' : '',
+          await new Promise((resolve, reject) => {
+            const reader = new FileReader()
+
+            reader.onload = evt => {
+              resolve(
+                evt.target.result.substring(evt.target.result.indexOf(',') + 1)
+              )
+            }
+
+            reader.readAsDataURL(
+              new Blob([JSON.stringify({ parts })], {
+                type: 'application/json'
+              })
+            )
+          }),
+          keyBase64,
+          link.length > 0
+            ? await new Promise((resolve, reject) => {
+                const reader = new FileReader()
+
+                reader.onload = evt => {
+                  resolve(
+                    evt.target.result.substring(
+                      evt.target.result.indexOf(',') + 1
+                    )
+                  )
+                }
+
+                reader.readAsDataURL(new Blob([link], { type: 'text/plain' }))
+              })
+            : ''
+        ].filter(Boolean)
+
+        document.querySelector('#export9HashLink').value = `${
+          location.hash.length === 0
+            ? location.href
+            : location.href.substring(0, location.href.indexOf('#'))
+        }#${hashParts.join(',')}`
+      }
+
+      if ('wakeLock' in navigator) {
+        document.onvisibilitychange = async () => {
+          if (wakeLock !== null && document.visibilityState === 'visible') {
+            try {
+              wakeLock = await navigator.wakeLock.request('screen')
+            } catch {}
+          }
+        }
+      }
+
+      if (CSS.supports('color-scheme', 'dark only')) {
+        document.querySelector('#forceDarkMode').disabled = false
+
+        document.querySelector('#forceDarkMode').checked =
+          'darkmode' in document.documentElement.dataset &&
+          document.documentElement.dataset.darkmode === 'f'
+
+        document.querySelector('#forceDarkMode').onclick = () => {
+          if (location.hash.length === 0) {
+            location.hash = '#forceDarkMode=0'
+            location.reload()
+          } else {
+            const hashParts = location.hash
+              .substring(1)
+              .split(',')
+              .filter(Boolean)
+
+            if (hashParts.includes('forceDarkMode=0')) {
+              hashParts.splice(hashParts.indexOf('forceDarkMode=0'), 1)
+            } else {
+              hashParts.unshift('forceDarkMode=0')
+            }
+
+            if (hashParts.length === 0) {
+              location.href = location.href.substring(
+                0,
+                location.href.indexOf('#')
+              )
+            } else {
+              location.hash = `#${hashParts.join(',')}`
+              location.reload()
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
